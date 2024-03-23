@@ -7,9 +7,9 @@
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
-    "test:unit": "vitest",
+    "test:e2e": "cypress open",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
+    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
@@ -35,6 +35,10 @@
     "vite": "^5.1.6",
     "vite-plugin-vue-devtools": "^7.0.18",
     "vitest": "^1.4.0",
-    "vue-tsc": "^2.0.6"
+    "vue-tsc": "^2.0.6",
+    "@simonsmith/cypress-image-snapshot": "^9.0.1",
+    "@tsconfig/node18": "^18.2.2",
+    "cypress": "^13.6.4",
+    "sass": "^1.70.0"
   }
 }
