@@ -39,8 +39,8 @@ describe('WordleBoard component tests', () => {
 
   test.todo('no end of game message appears if the user has not yet guessed', async () => {
     const guessInput = wrapper.find("input[type=text]");
-;
-    await guessInput.trigger("keydown.enter")
+
+    await guessInput.trigger("keydown.enter");
     expect(wrapper.text()).toContain(VICTORYMSG);
   });
 })// end of test suite
