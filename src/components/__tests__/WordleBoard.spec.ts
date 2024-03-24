@@ -41,4 +41,12 @@ describe('WordleBoard component tests', () => {
     expect(wrapper.text()).not.toContain(VICTORYMSG);
     expect(wrapper.text()).not.toContain(DEFEATMSG);
   });
+
+  it('shows a warning if the submitted word is less than 5 characters', async () => {
+    const guessInput = wrapper.find("input[type=text]");
+
+    await guessInput.setValue("WRONG");
+    await guessInput.trigger("keydown.enter");
+    expect(wrapper.text()).toContain(DEFEATMSG);
+  });
 })// end of test suite
