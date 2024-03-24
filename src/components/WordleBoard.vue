@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import {DEFEAT_MESSAGE, MAX_GUESSES_COUNT, VICTORY_MESSAGE} from "@/settings"
-import englishWords from "@/englishWordsWith5Letters.json"
-import {computed, ref} from "vue"
-import GuessInput from "@/components/GuessInput.vue"
-import GuessView from "@/components/GuessView.vue"
+import { DEFEAT_MESSAGE, MAX_GUESSES_COUNT, VICTORY_MESSAGE } from '@/settings'
+import englishWords from '@/englishWordsWith5Letters.json'
+import { computed, ref } from 'vue'
+import GuessInput from '@/components/GuessInput.vue'
+import GuessView from '@/components/GuessView.vue'
 
 const props = defineProps({
+  correctAnswer: String,
   wordOfTheDay: {
     type: String,
     required: true,
@@ -15,15 +16,18 @@ const props = defineProps({
 
 const guessesSubmitted = ref<string[]>([])
 
-const isGameOver = computed(() =>
+const IS_GAME_OVER = computed(() =>
   guessesSubmitted.value.length === MAX_GUESSES_COUNT
   || guessesSubmitted.value.includes(props.wordOfTheDay)
 )
 
+//const IS_GAME_OVER: boolean = true;
+
 const countOfEmptyGuesses = computed(() => {
   const guessesRemaining = MAX_GUESSES_COUNT - guessesSubmitted.value.length
 
-  return isGameOver.value ? guessesRemaining : guessesRemaining - 1
+   return IS_GAME_OVER.value ? guessesRemaining : guessesRemaining - 1
+  //return IS_GAME_OVER ? guessesRemaining : guessesRemaining - 1
 })
 </script>
 
@@ -35,16 +39,20 @@ const countOfEmptyGuesses = computed(() => {
       </li>
       <li>
         <!-- Added datatype "string" here: `"(guess: string) =>...` to resolve the use of any TS datatype error. -->
-        <guess-input :disabled="isGameOver" @guess-submitted="(guess: string) => guessesSubmitted.push(guess)"/>
+        <guess-input :disabled="IS_GAME_OVER" @guess-submitted="(guess: string) => guessesSubmitted.push(guess)"/>
       </li>
       <li v-for="i in countOfEmptyGuesses" :key="`remaining-guess-${i}`">
         <guess-view guess=""/>
       </li>
     </ul>
 
-    <p v-if="isGameOver"
+    <p>{{props.correctAnswer}}</p>
+
+    <p v-if="IS_GAME_OVER"
        class="end-of-game-message"
-       v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE"/>
+       v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE">
+
+    </p>
   </main>
 </template>
 
