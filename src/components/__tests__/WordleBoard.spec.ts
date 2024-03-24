@@ -110,7 +110,12 @@ describe("WordleBoard Component tests", () => {
       expect(wrapper.text()).toContain(VICTORY_MESSAGE)
     })
 
-    test("player guesses can only be submitted if they are real words", async () => {
+    //FIXME: #1 This test is not worded correctly.  The json file for the words only has 500 words, not
+    // all 5 letter words in all of the English language.
+    //FIXME: #2 There's a bug in this code.  If one enters a non-word, there's no warning or UI to
+    // tell the user what's happening on screen and the game freezes/can't continue playing.
+    //test("player guesses can only be submitted if they are real words", async () => {
+    test("a guess may only be submitted if it's a real word and in the game dictionary", async () => {
       await playerTypesAndSubmitsGuess("QWERT")
 
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
@@ -129,6 +134,10 @@ describe("WordleBoard Component tests", () => {
       expect(wrapper.find<HTMLInputElement>("input[type=text]").element.value).toEqual("HRT")
     })
 
+    // FIXME: Bug: there's a bug in this test or in the code.  Note, this whole crappy app is not
+    //  mine but from Vue School.  The whole app is hardcoded to just one answer: "TESTS"!!! Skip
+    //  this test for now.  Go back, make the app actually work at some point in time, and find and
+    //  fix this bug.
     test.skip("non-letter characters do not render on the screen while being typed", async () => {
       await playerTypesGuess("12")
       await playerTypesGuess("123")
