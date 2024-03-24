@@ -3,6 +3,10 @@ import WordleBoard from './components/WordleBoard.vue'
 </script>
 
 <template>
-      <WordleBoard word-of-the-day="TESTS" victory-msg="You won!" />
+      <WordleBoard
+        wordOfTheDay="TESTS"
+        victoryMsg="You won!"
+        defeatMsg="You lost congrats!"
+      />
 </template>
 
