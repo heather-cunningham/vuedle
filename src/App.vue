@@ -4,7 +4,7 @@ import WordleBoard from './components/WordleBoard.vue'
 
 <template>
       <WordleBoard
-        wordOfTheDay="TESTS"
+        wordOfTheDay='TESTS'
         victoryMsg="You won!"
         defeatMsg="Better luck next time!"
       />
