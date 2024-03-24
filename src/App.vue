@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import WordleBoard from './components/WordleBoard.vue'
+import words from '@/englishWordsWith5Letters.json'
+
+function getRandomWotd() {
+  const randomIndex: number = Math.floor(Math.random() * words.length);
+  return words[randomIndex];
+}
+
+const WOTD: string = getRandomWotd();
 </script>
 
 <template>
-  <!-- FIXME: Hardcoded to one correct answer. This Vue School online class was not good. -->
-      <WordleBoard wordOfTheDay='TESTS' />
+  <p>{{ WOTD }}</p>
+  <WordleBoard wordOfTheDay="{{WOTD}}" />
 </template>
 
