@@ -3,10 +3,7 @@ import WordleBoard from './components/WordleBoard.vue'
 </script>
 
 <template>
-      <WordleBoard
-        wordOfTheDay='TESTS'
-        victoryMsg="You won!"
-        defeatMsg="Better luck next time!"
-      />
+  <!-- FIXME: Hardcoded to one correct answer. This Vue School online class was not good. -->
+      <WordleBoard wordOfTheDay='TESTS' />
 </template>
 
