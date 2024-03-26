@@ -1,5 +1,17 @@
+<template>
+  <ul class="word">
+    <li v-for="(letter, index) in guess.padEnd(WORD_SIZE, ' ')"
+        :key="`${letter}-${index}`"
+        :data-letter="letter"
+        :class="{'with-flips': answer}"
+        :data-letter-feedback="getFeedback(index)"
+        class="letter"
+        v-text="letter"/>
+  </ul>
+</template>
+
 <script lang="ts" setup>
-import {WORD_SIZE} from "@/settings"
+import { WORD_SIZE } from '@/settings'
 
 const props = defineProps<{ guess: string, answer?: string }>()
 
@@ -18,18 +30,6 @@ function getFeedback(letterPosition: number): null | "correct" | "incorrect" | "
   return letterExpected === letterGuessed ? "correct" : "almost"
 }
 </script>
-
-<template>
-  <ul class="word">
-    <li v-for="(letter, index) in guess.padEnd(WORD_SIZE, ' ')"
-        :key="`${letter}-${index}`"
-        :data-letter="letter"
-        :class="{'with-flips': answer}"
-        :data-letter-feedback="getFeedback(index)"
-        class="letter"
-        v-text="letter"/>
-  </ul>
-</template>
 
 <style lang="scss" scoped>
 ul {

@@ -1,3 +1,29 @@
+<template>
+  <main>
+    <ul>
+      <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
+        <guess-view :answer="wordOfTheDay" :guess="guess"/>
+      </li>
+      <li>
+        <!-- Added datatype "string" here: `"(guess: string) =>...` to resolve the use of any TS datatype error. -->
+        <guess-input :disabled="IS_GAME_OVER" @guess-submitted="(guess: string) => guessesSubmitted.push(guess)"/>
+      </li>
+      <li v-for="i in countOfEmptyGuesses" :key="`remaining-guess-${i}`">
+        <guess-view guess=""/>
+      </li>
+    </ul>
+
+    <p>{{props.correctAnswer}}</p>
+
+    <p v-if="IS_GAME_OVER"
+       class="end-of-game-message"
+       v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE">
+
+    </p>
+  </main>
+</template>
+
+
 <script lang="ts" setup>
 import { DEFEAT_MESSAGE, MAX_GUESSES_COUNT, VICTORY_MESSAGE } from '@/settings'
 import englishWords from '@/englishWordsWith5Letters.json'
@@ -30,31 +56,6 @@ const countOfEmptyGuesses = computed(() => {
   //return IS_GAME_OVER ? guessesRemaining : guessesRemaining - 1
 })
 </script>
-
-<template>
-  <main>
-    <ul>
-      <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
-        <guess-view :answer="wordOfTheDay" :guess="guess"/>
-      </li>
-      <li>
-        <!-- Added datatype "string" here: `"(guess: string) =>...` to resolve the use of any TS datatype error. -->
-        <guess-input :disabled="IS_GAME_OVER" @guess-submitted="(guess: string) => guessesSubmitted.push(guess)"/>
-      </li>
-      <li v-for="i in countOfEmptyGuesses" :key="`remaining-guess-${i}`">
-        <guess-view guess=""/>
-      </li>
-    </ul>
-
-    <p>{{props.correctAnswer}}</p>
-
-    <p v-if="IS_GAME_OVER"
-       class="end-of-game-message"
-       v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE">
-
-    </p>
-  </main>
-</template>
 
 <style scoped>
 main {

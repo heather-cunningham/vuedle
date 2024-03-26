@@ -1,8 +1,21 @@
+<template>
+  <guess-view v-if="!disabled" :class="{shake: hasFailedValidation}" :guess="formattedGuessInProgress"/>
+
+  <input v-model="formattedGuessInProgress"
+         :maxlength="WORD_SIZE"
+         :disabled="disabled"
+         aria-label="Make your guess for the word of the day!"
+         autofocus
+         @blur="({target}) => (target as HTMLInputElement).focus()"
+         type="text"
+         @keydown.enter="onSubmit">
+</template>
+
 <script lang="ts" setup>
-import {WORD_SIZE} from "@/settings"
-import englishWords from "@/englishWordsWith5Letters.json"
-import {computed, ref} from "vue"
-import GuessView from "@/components/GuessView.vue"
+import { WORD_SIZE } from '@/settings'
+import englishWords from '@/englishWordsWith5Letters.json'
+import { computed, ref } from 'vue'
+import GuessView from '@/components/GuessView.vue'
 
 withDefaults(defineProps<{ disabled?: boolean }>(), {disabled: false})
 
@@ -40,19 +53,6 @@ function onSubmit() {
   guessInProgress.value = null
 }
 </script>
-
-<template>
-  <guess-view v-if="!disabled" :class="{shake: hasFailedValidation}" :guess="formattedGuessInProgress"/>
-
-  <input v-model="formattedGuessInProgress"
-         :maxlength="WORD_SIZE"
-         :disabled="disabled"
-         aria-label="Make your guess for the word of the day!"
-         autofocus
-         @blur="({target}) => (target as HTMLInputElement).focus()"
-         type="text"
-         @keydown.enter="onSubmit">
-</template>
 
 <style scoped>
 input {
