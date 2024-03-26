@@ -1,14 +1,15 @@
 <template>
-  <ul class="word">
-    <li v-for="(letter, index) in guess.padEnd(WORD_SIZE, ' ')"
-        :key="`${letter}-${index}`"
-        :data-letter="letter"
-        :class="{'with-flips': answer}"
-        :data-letter-feedback="getFeedback(index)"
-        class="letter"
-        v-text="letter"/>
-  </ul>
+	<ul class="word">
+		<li v-for="(letter, index) in guess.padEnd(WORD_SIZE, ' ')"
+				:key="`${letter}-${index}`"
+				:data-letter="letter"
+				:class="{'with-flips': answer}"
+				:data-letter-feedback="getFeedback(index)"
+				class="letter"
+				v-text="letter"/>
+	</ul>
 </template>
+
 
 <script lang="ts" setup>
 import { WORD_SIZE } from '@/settings'
