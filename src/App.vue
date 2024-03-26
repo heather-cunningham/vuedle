@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import WordleBoard from './components/WordleBoard.vue'
-import words from '@/englishWordsWith5Letters.json'
+import words from '@/assets/englishWordsWith5Letters.json'
 
 function getRandomWotd() {
   const randomIndex: number = Math.floor(Math.random() * words.length);

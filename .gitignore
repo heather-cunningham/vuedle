@@ -28,4 +28,4 @@ coverage
 *.sw?
 
 *.tsbuildinfo
-src/englishWordsWith5Letters.json
+src/assets/englishWordsWith5Letters.json

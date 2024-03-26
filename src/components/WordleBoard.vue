@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import { DEFEAT_MESSAGE, MAX_GUESSES_COUNT, VICTORY_MESSAGE } from '@/settings'
-import englishWords from '@/englishWordsWith5Letters.json'
+import englishWords from '@/assets/englishWordsWith5Letters.json'
 import { computed, ref } from 'vue'
 import GuessInput from '@/components/GuessInput.vue'
 import GuessView from '@/components/GuessView.vue'
