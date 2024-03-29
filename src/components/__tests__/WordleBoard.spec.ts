@@ -14,14 +14,16 @@ describe('WordleBoard Component tests', () => {
   describe('End of Game Messages tests', () => {
     it('shows a victory message when the user correctly guesses the word of the day',
       async () => {
-        await playerTypesAndSubmitsGuess(WOTD)
+        await playerTypesGuess(WOTD)
+        await playerPressesEnter()
         expect(wrapper.text()).toContain(VICTORY_MESSAGE)
       })
 
     it(`shows a defeat message if the player guesses incorrectly ${MAX_GUESSES_COUNT} times`,
       async () => {
         for (let i = 0; i <= MAX_GUESSES_COUNT; i++) {
-          await playerTypesAndSubmitsGuess('WRONG')
+          await playerTypesGuess('WRONG')
+          await playerPressesEnter()
         }
         expect(wrapper.text()).toContain(DEFEAT_MESSAGE)
       })
@@ -38,7 +40,8 @@ describe('WordleBoard Component tests', () => {
         it(`does not show a defeat message on incorrect guess #${numberOfGuesses + 1}`,
           async () => {
             for (let i = 0; i <= numberOfGuesses; i++) {
-              await playerTypesAndSubmitsGuess('WRONG')
+              await playerTypesGuess('WRONG')
+              await playerPressesEnter()
             }
             expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
           })
@@ -89,12 +92,14 @@ describe('WordleBoard Component tests', () => {
     })
 
     it('the input gets cleared after each submission', async () => {
-      await playerTypesAndSubmitsGuess('WRONG')
+      await playerTypesGuess('WRONG')
+      await playerPressesEnter()
       expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value).toEqual('')
     })
 
     it(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
-      await playerTypesAndSubmitsGuess(WOTD + 'EXTRA')
+      await playerTypesGuess(WOTD + 'EXTRA')
+      await playerPressesEnter()
       expect(wrapper.text()).toContain(VICTORY_MESSAGE)
     })
 
@@ -103,20 +108,23 @@ describe('WordleBoard Component tests', () => {
     //FIXME: #2 There's a bug in this code.  If one enters a non-word, there's no warning or UI to
     // tell the user what's happening on screen and the game freezes/can't continue playing.
     //it("player guesses can only be submitted if they are real words", async () => {
-    it('a guess may only be submitted if it\'s a real word and in the game dictionary',
+    it("a guess may only be submitted if it's a real word in the game dictionary",
       async () => {
-        await playerTypesAndSubmitsGuess('QWERT')
+        await playerTypesGuess('QWERT')
+        await playerPressesEnter()
         expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
         expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
       })
 
     it('player guesses are not case-sensitive', async () => {
-      await playerTypesAndSubmitsGuess(WOTD.toLowerCase())
+      await playerTypesGuess(WOTD.toLowerCase())
+      await playerPressesEnter()
       expect(wrapper.text()).toContain(VICTORY_MESSAGE)
     })
 
     it('player guesses can only contain letters', async () => {
       await playerTypesGuess('H3!RT')
+      await playerPressesEnter()
       expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value)
         .toEqual('HRT')
     })
@@ -125,7 +133,7 @@ describe('WordleBoard Component tests', () => {
     //  mine but from Vue School.  The whole app is hardcoded to just one answer: "TESTS"!!! Skip
     //  this test for now.  Go back, make the app actually work at some point in time, and find and
     //  fix this bug.
-    test.skip('non-letter characters do not render on the screen while being typed',
+    it.skip('non-alphabetical characters do not render on the screen when typed',
       async () => {
         await playerTypesGuess('12')
         await playerTypesGuess('123')
@@ -134,7 +142,7 @@ describe('WordleBoard Component tests', () => {
 
     it('the player loses control after the max amount of guesses have been sent',
       async () => {
-        const guesses = [
+        const GUESSES = [
           'WRONG',
           'GUESS',
           'HELLO',
@@ -143,8 +151,9 @@ describe('WordleBoard Component tests', () => {
           'CODER'
         ]
 
-        for (const guess of guesses) {
-          await playerTypesAndSubmitsGuess(guess)
+        for (const GUESS of GUESSES) {
+          await playerTypesGuess(GUESS)
+          await playerPressesEnter()
         }
         expect(wrapper.find('input[type=text]').attributes('disabled')).not.toBeUndefined()
       })
@@ -159,8 +168,9 @@ describe('WordleBoard Component tests', () => {
         'CODER'
       ]
 
-      for (const guess of guesses) {
-        await playerTypesAndSubmitsGuess(guess)
+      for (const GUESS of guesses) {
+        await playerTypesGuess(GUESS)
+        await playerPressesEnter()
       }
 
       for (const guess of guesses) {
@@ -169,7 +179,8 @@ describe('WordleBoard Component tests', () => {
     })
 
     it('the player loses control after the correct guess has been given', async () => {
-      await playerTypesAndSubmitsGuess(WOTD)
+      await playerTypesGuess(WOTD)
+      await playerPressesEnter()
       expect(wrapper.find('input[type=text]').attributes('disabled')).not.toBeUndefined()
     })
   })
@@ -182,13 +193,14 @@ describe('WordleBoard Component tests', () => {
 
     it(`${MAX_GUESSES_COUNT} guess-views are present when the player wins the game`,
       async () => {
-        await playerTypesAndSubmitsGuess(WOTD)
+        await playerTypesGuess(WOTD)
+        await playerPressesEnter()
         expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT)
       })
 
     it(`${MAX_GUESSES_COUNT} guess-views are present as the player loses the game`,
       async () => {
-        const guesses = [
+        const GUESSES = [
           'WRONG',
           'GUESS',
           'HELLO',
@@ -197,8 +209,9 @@ describe('WordleBoard Component tests', () => {
           'CODER'
         ]
 
-        for (const guess of guesses) {
-          await playerTypesAndSubmitsGuess(guess)
+        for (const GUESS of GUESSES) {
+          await playerTypesGuess(GUESS)
+          await playerPressesEnter()
           expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT)
         }
       })
@@ -259,7 +272,8 @@ describe('WordleBoard Component tests', () => {
       '${expectedFeedback}' because '${reason}'`, async () => {
         wrapper = mount(WordleBoard, { propsData: { wordOfTheDay } })
 
-        await playerTypesAndSubmitsGuess(playerGuess)
+        await playerTypesGuess(playerGuess)
+        await playerPressesEnter()
 
         const actualFeedback = wrapper.findAll('[data-letter]')
           .at(position)?.attributes('data-letter-feedback')
@@ -277,12 +291,6 @@ describe('WordleBoard Component tests', () => {
   async function playerPressesEnter() {
     await wrapper.find('input[type=text]').trigger('keydown.enter')
   }
-
-  async function playerTypesAndSubmitsGuess(guess: string) {
-    await playerTypesGuess(guess)
-    await playerPressesEnter()
-  }
-
 })
 
 
