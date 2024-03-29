@@ -12,7 +12,7 @@ describe('WordleBoard Component tests', () => {
   })
 
   describe('End of Game Messages tests', () => {
-    it('shows a victory message when the user makes a guess matching the word of the day',
+    it('shows a victory message when the user correctly guesses the word of the day',
       async () => {
         await playerTypesAndSubmitsGuess(WOTD)
         expect(wrapper.text()).toContain(VICTORY_MESSAGE)
@@ -44,19 +44,19 @@ describe('WordleBoard Component tests', () => {
           })
       })
 
-    it('no end-of-game message appears if the user has not yet made a guess',
+    it('no end-of-game message appears if the user has not made a guess yet',
       async () => {
         expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
         expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
       })
   })
 
-  describe('Rules for Defining WOTD tests', () => {
+  describe('Defining the WOTD (Word of the Day) tests', () => {
     beforeEach(() => {
       console.warn = vi.fn()
     })
 
-    test.each(
+    it.each(
       [
         { wordOfTheDay: 'FLY', reason: 'word-of-the-day must have 5 characters' },
         { wordOfTheDay: 'tests', reason: 'word-of-the-day must be all in uppercase' },
@@ -65,14 +65,12 @@ describe('WordleBoard Component tests', () => {
     )('Since $reason: $wordOfTheDay is invalid, therefore a warning must be emitted',
       async ({ wordOfTheDay }) => {
         mount(WordleBoard, { props: { wordOfTheDay } })
-
         expect(console.warn).toHaveBeenCalled()
       })
 
     it('no warning is emitted if the word of the day provided is a real uppercase English word' +
       'with 5 characters', async () => {
       mount(WordleBoard, { props: { wordOfTheDay: 'TESTS' } })
-
       expect(console.warn).not.toHaveBeenCalled()
     })
   })
@@ -86,20 +84,17 @@ describe('WordleBoard Component tests', () => {
       })
 
       expect(wrapper.find('input[type=text]').attributes('autofocus')).not.toBeUndefined()
-
       await wrapper.find('input[type=text]').trigger('blur')
       expect(document.activeElement).toBe(wrapper.find('input[type=text]').element)
     })
 
     it('the input gets cleared after each submission', async () => {
       await playerTypesAndSubmitsGuess('WRONG')
-
       expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value).toEqual('')
     })
 
     it(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
       await playerTypesAndSubmitsGuess(WOTD + 'EXTRA')
-
       expect(wrapper.text()).toContain(VICTORY_MESSAGE)
     })
 
@@ -111,20 +106,17 @@ describe('WordleBoard Component tests', () => {
     it('a guess may only be submitted if it\'s a real word and in the game dictionary',
       async () => {
         await playerTypesAndSubmitsGuess('QWERT')
-
         expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
         expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
       })
 
     it('player guesses are not case-sensitive', async () => {
       await playerTypesAndSubmitsGuess(WOTD.toLowerCase())
-
       expect(wrapper.text()).toContain(VICTORY_MESSAGE)
     })
 
     it('player guesses can only contain letters', async () => {
       await playerTypesGuess('H3!RT')
-
       expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value)
         .toEqual('HRT')
     })
@@ -137,7 +129,6 @@ describe('WordleBoard Component tests', () => {
       async () => {
         await playerTypesGuess('12')
         await playerTypesGuess('123')
-
         expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value).toEqual('')
       })
 
@@ -155,7 +146,6 @@ describe('WordleBoard Component tests', () => {
         for (const guess of guesses) {
           await playerTypesAndSubmitsGuess(guess)
         }
-
         expect(wrapper.find('input[type=text]').attributes('disabled')).not.toBeUndefined()
       })
 
@@ -180,7 +170,6 @@ describe('WordleBoard Component tests', () => {
 
     it('the player loses control after the correct guess has been given', async () => {
       await playerTypesAndSubmitsGuess(WOTD)
-
       expect(wrapper.find('input[type=text]').attributes('disabled')).not.toBeUndefined()
     })
   })
@@ -194,7 +183,6 @@ describe('WordleBoard Component tests', () => {
     it(`${MAX_GUESSES_COUNT} guess-views are present when the player wins the game`,
       async () => {
         await playerTypesAndSubmitsGuess(WOTD)
-
         expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT)
       })
 
