@@ -58,34 +58,19 @@ describe('WordleBoard Component tests', () => {
       console.warn = vi.fn()
     })
 
-    // it.each(
-    //   [
-    //     { wordOfTheDay: 'FLY', reason: "the 'WOTD must have 5 characters'" },
-        // Not a valid test.  User should be able to type in any case and the UI should text
-        // transform the input to uppercase.  This test should be checking for the text transform,
-        // not what the user types.
-        // { wordOfTheDay: 'tests', reason: "'word-of-the-day must be all in uppercase'" },
-        //
-        // Duplicate test and not valid, as the game dictionary does not contain all the 5-letter
-        // words in the entirety of the English language.
-        //{ wordOfTheDay: 'QWERT', reason: "'word-of-the-day must be a valid English word'" }
-    //   ]
-    // )
-
-
     //FIXME: What good to the user is a warning in the console?  It should be a modal or toast, so
     // the user knows what the warning is.
-    it.skip("shows a warning in the console if the user's guess is less than 5 letters in length",
+    it.skip(`shows a warning in the console if the user's guess is less than ${WORD_SIZE} letters in length`,
       async () => {
         await playerTypesGuess('FLY')
         await playerPressesEnter()
         expect(console.warn).toHaveBeenCalled()
       })
 
-    //FIXME: Not a valid test, reword test descript, and the warning needs to be something the average
-    // user can read/see actually -- not in the console.
-    it.skip('no warning is emitted if the word of the day provided is a real uppercase English word' +
-      'with 5 characters', async () => {
+    //FIXME: Not a valid test. The warning needs to be something the average user can read/see
+    // actually -- not in the console.
+    it.skip(`does not show a warning in the console if the user's guess has ${WORD_SIZE} characters`,
+      async () => {
       mount(WordleBoard, { props: { wordOfTheDay: 'TESTS' } })
       expect(console.warn).not.toHaveBeenCalled()
     })
@@ -121,7 +106,7 @@ describe('WordleBoard Component tests', () => {
     // all 5 letter words in all of the English language.
     //FIXME: #2 There's a bug in this code.  If one enters a non-word, there's no warning or UI to
     // tell the user what's happening on screen and the game freezes/can't continue playing.
-    it("submits a guess only if it's a real word in the game dictionary",
+    it("accepts a player's guess only if it's a real English word in the game dictionary",
       async () => {
         await playerTypesGuess('QWERT')
         await playerPressesEnter()
