@@ -1,14 +1,15 @@
 <template>
-	<WordleBoard :wordOfTheDay="WOTD" />
+	<VordleBoard :wordOfTheDay="WOTD" />
 </template>
 
 <script setup lang="ts">
-import WordleBoard from './components/WordleBoard.vue'
+import VordleBoard from './components/VordleBoard.vue'
 import words from '@/assets/englishWordsWith5Letters.json'
 
 function getRandomWotd() {
-	const randomIndex: number = Math.floor(Math.random() * words.length)
-	return words[randomIndex]
+	const WOTD = words[Math.floor(Math.random() * words.length)]
+	console.log(WOTD)
+	return WOTD
 }
 
 const WOTD = getRandomWotd();

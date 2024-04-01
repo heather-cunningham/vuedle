@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils'
-import WordleBoard from '../WordleBoard.vue'
+import WordleBoard from '../VordleBoard.vue'
 import { DEFEAT_MESSAGE, MAX_GUESSES_COUNT, VICTORY_MESSAGE, WORD_SIZE } from '../../settings'
 import GuessView from '../GuessView.vue'
 
-describe('WordleBoard Component tests', () => {
+describe('VordleBoard Component tests', () => {
   const WOTD = 'TESTS'
   let wrapper: ReturnType<typeof mount>
 
