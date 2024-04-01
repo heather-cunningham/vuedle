@@ -8,6 +8,7 @@ import words from '@/assets/englishWordsWith5Letters.json'
 
 function getRandomWotd() {
 	const WOTD = words[Math.floor(Math.random() * words.length)]
+	//TODO: remove when done with entire game
 	console.log(WOTD)
 	return WOTD
 }
