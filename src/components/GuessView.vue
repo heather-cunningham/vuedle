@@ -14,7 +14,10 @@
 <script lang="ts" setup>
 import { WORD_SIZE } from '@/settings'
 
-const props = defineProps<{ guess: string, answer?: string }>()
+const props = defineProps<{
+	guess: string,
+	answer?: string,
+}>()
 
 function getFeedback(letterPosition: number): null | "correct" | "incorrect" | "almost" {
   if (!props.answer) {
@@ -23,13 +26,47 @@ function getFeedback(letterPosition: number): null | "correct" | "incorrect" | "
 
   const letterGuessed = props.guess[letterPosition]
   const letterExpected = props.answer[letterPosition]
-
+	
+	findRepeatCharacters()
+	
   if (!props.answer.includes(letterGuessed)) {
     return "incorrect"
   }
-
+	
   return letterExpected === letterGuessed ? "correct" : "almost"
 }
+
+function findRepeatCharacters() {
+	let chrCountMap = new Map<string, number>();
+	let correctAnswer = props.answer!;
+	
+	for (let chr of correctAnswer){
+		if(chrCountMap.has(chr)){
+			let firstIndexOfChr = correctAnswer.indexOf(chr)
+			let lastIndexOfChr = correctAnswer.lastIndexOf(chr)
+			let chrCount = chrCountMap.get(chr)
+
+			if(firstIndexOfChr !== lastIndexOfChr && firstIndexOfChr !== -1 && lastIndexOfChr !== -1){
+				++chrCount!
+				chrCountMap.set(chr, chrCount!)
+				
+				let correctAnswerSubStr = correctAnswer.substring(firstIndexOfChr + 1, lastIndexOfChr)
+				if(correctAnswerSubStr.includes(chr)){
+					++chrCount!
+					chrCountMap.set(chr, chrCount!)
+				}
+			}
+		} else {
+			chrCountMap.set(chr, 1)
+		}//end if-else
+	}// end for
+	
+	console.log("In the correct answer: " + correctAnswer)
+	for (let [key, value] of chrCountMap) {
+		console.log("Letter: " + key + " appears " + value + " times");
+	}
+}
+
 </script>
 
 <style lang="scss" scoped>
