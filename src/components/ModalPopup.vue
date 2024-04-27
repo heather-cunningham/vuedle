@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { DEFEAT_MESSAGE, VICTORY_MESSAGE } from '@/settings'
+import { ref } from 'vue';
+import { DEFEAT_MESSAGE, VICTORY_MESSAGE } from '@/settings';
 
-const showModal = ref(true)
+const showModal = ref(true);
 
 const props = defineProps({
 	wordOfTheDay: {
@@ -27,7 +27,7 @@ const props = defineProps({
 		type: String,
 		required: true
 	}
-})
+});
 
 </script>
 

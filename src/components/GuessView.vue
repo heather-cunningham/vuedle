@@ -12,23 +12,23 @@
 
 
 <script lang="ts" setup>
-import { WORD_SIZE } from '@/settings'
+import { WORD_SIZE } from '@/settings';
 
-const props = defineProps<{ guess: string, answer?: string }>()
+const props = defineProps<{ guess: string, answer?: string }>();
 
 function getFeedback(letterPosition: number): null | "correct" | "incorrect" | "almost" {
   if (!props.answer) {
-    return null
+    return null;
   }
 
-  const letterGuessed = props.guess[letterPosition]
-  const letterExpected = props.answer[letterPosition]
+  const letterGuessed = props.guess[letterPosition];
+  const letterExpected = props.answer[letterPosition];
 
   if (!props.answer.includes(letterGuessed)) {
-    return "incorrect"
+    return "incorrect";
   }
 
-  return letterExpected === letterGuessed ? "correct" : "almost"
+  return letterExpected === letterGuessed ? "correct" : "almost";
 }
 </script>
 

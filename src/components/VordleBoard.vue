@@ -28,12 +28,12 @@
 
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { MAX_GUESSES_COUNT } from '@/settings'
-import englishWords from '@/assets/englishWordsWith5Letters.json'
-import GuessInput from '@/components/GuessInput.vue'
-import GuessView from '@/components/GuessView.vue'
-import ModalPopup from '@/components/ModalPopup.vue'
+import { computed, ref } from 'vue';
+import { MAX_GUESSES_COUNT } from '@/settings';
+import englishWords from '@/assets/englishWordsWith5Letters.json';
+import GuessInput from '@/components/GuessInput.vue';
+import GuessView from '@/components/GuessView.vue';
+import ModalPopup from '@/components/ModalPopup.vue';
 
 const props = defineProps({
 	wordOfTheDay: {
@@ -41,21 +41,21 @@ const props = defineProps({
 		required: true,
 		validator: (wordGiven: string) => englishWords.includes(wordGiven)
 	}
-})
+});
 
 // `ref` is used to make primitive data types and values reactive
-const guessesSubmitted = ref<string[]>([])
+const guessesSubmitted = ref<string[]>([]);
 
 const IS_GAME_OVER = computed(() => {
 		return guessesSubmitted.value.length === MAX_GUESSES_COUNT
-			|| guessesSubmitted.value.includes(props.wordOfTheDay)
+			|| guessesSubmitted.value.includes(props.wordOfTheDay);
 	}
-)
+);
 
 const countOfEmptyGuesses = computed(() => {
-	const guessesRemaining = MAX_GUESSES_COUNT - guessesSubmitted.value.length
-	return IS_GAME_OVER.value ? guessesRemaining : guessesRemaining - 1
-})
+	const guessesRemaining = MAX_GUESSES_COUNT - guessesSubmitted.value.length;
+	return IS_GAME_OVER.value ? guessesRemaining : guessesRemaining - 1;
+});
 </script>
 
 <style scoped>

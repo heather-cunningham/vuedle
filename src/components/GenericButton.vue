@@ -1,15 +1,19 @@
 <template>
-	<button @click="handleClick" :class="buttonClass">
-		{{ props.buttonLabel }}
+	<button :id="props.id" :class="props.buttonClass" @click="handleClick">
+		{{ props.label }}
 	</button>
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineProps } from 'vue'
+import { defineEmits, defineProps } from 'vue';
 
 const props = defineProps(
 	{
-		buttonLabel: {
+		id: {
+			type: String,
+			required: true,
+		},
+		label: {
 			type: String,
 			required: true,
 		},
@@ -17,12 +21,20 @@ const props = defineProps(
 			type: String,
 			default: '',
 		},
-	},
+		onClick: {
+			type: Function /*as () => {}*/,
+			default: () => {},
+		},
+	}
 );
 
-const emit  = defineEmits(['clicked']);
+const emit = defineEmits(['clicked']);
+
+// const handleClick = () => {
+// 	emit('clicked');
+// };
 
 const handleClick = () => {
-	emit('clicked');
+	emit(props.onClick());
 };
 </script>
