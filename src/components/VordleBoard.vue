@@ -17,6 +17,11 @@
 			</ul>
 		</div>
 		
+		<div class="game-buttons">
+			<GenericButton id="submitBtn" label="Submit" />
+			<GenericButton id="resetBtn" label="Reset" />
+		</div>
+		
 		<div>
 			<ModalPopup :wordOfTheDay="wordOfTheDay"
 									:guessSubmitted="guessesSubmitted[guessesSubmitted.length - 1]"
@@ -33,6 +38,7 @@ import { MAX_GUESSES_COUNT } from '@/settings';
 import englishWords from '@/assets/englishWordsWith5Letters.json';
 import GuessInput from '@/components/GuessInput.vue';
 import GuessView from '@/components/GuessView.vue';
+import GenericButton from '@/components/GenericButton.vue';
 import ModalPopup from '@/components/ModalPopup.vue';
 
 const props = defineProps({
@@ -62,14 +68,15 @@ const countOfEmptyGuesses = computed(() => {
 main {
 	margin: 6%;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	font-family: Roboto, Tahoma, Verdana, sans-serif;
 }
 
 .gameboard {
-	margin: 0 3% 0 0;
+	margin: 0 3% 0 35%;
 	float: left;
+	display: inherit;
+	flex-direction: column;
 }
 
 ul {
@@ -80,6 +87,13 @@ ul {
 
 li {
 	margin-bottom: 0.25rem;
+}
+
+.game-buttons {
+	float: right;
+	clear: both;
+	display: inherit;
+	flex-direction: column;
 }
 
 </style>
