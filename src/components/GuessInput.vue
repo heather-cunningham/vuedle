@@ -17,7 +17,10 @@ import englishWords from '@/assets/englishWordsWith5Letters.json';
 import { computed, ref } from 'vue';
 import GuessView from '@/components/GuessView.vue';
 
-withDefaults(defineProps<{ disabled?: boolean }>(), { disabled: false });
+withDefaults(
+	defineProps<{ disabled?: boolean }>(),
+	{ disabled: false },
+);
 
 const guessInProgress = ref<string | null>(null);
 const hasFailedValidation = ref<boolean>(false);
