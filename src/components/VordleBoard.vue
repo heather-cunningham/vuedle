@@ -74,10 +74,7 @@ main {
 }
 
 .gameboard {
-	/*margin: 0 3% 0 0;*/
-	/*float: left;*/
 	display: inherit;
-	/*flex-direction: column;*/
 }
 
 ul {
@@ -92,10 +89,7 @@ li {
 
 .game-buttons {
 	margin: 6px 0 0 0;
-	/*float: right;
-	clear: both;*/
 	display: inherit;
-	/*flex-direction: column;*/
 }
 
 .game-button {
