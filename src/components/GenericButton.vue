@@ -1,7 +1,7 @@
 <template>
-	<button :id="props.id" :class="props.buttonClass" @click="handleClick">
-		{{ props.label }}
-	</button>
+	<button :id="props.id" :class="props.buttonClass" v-text="props.text" @click="handleClick" />
+<!--		{{ props.text }}-->
+<!--	</button>-->
 </template>
 
 <script lang="ts" setup>
@@ -13,7 +13,7 @@ const props = defineProps(
 			type: String,
 			required: true,
 		},
-		label: {
+		text: {
 			type: String,
 			required: true,
 		},

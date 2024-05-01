@@ -18,8 +18,8 @@
 		</div>
 		
 		<div class="game-buttons">
-				<GenericButton id="submitBtn" class="game-button" label="Submit" />
-				<GenericButton id="resetBtn" class="game-button" label="Reset" />
+				<GenericButton id="submitBtn" class="game-button" text="Submit" />
+				<GenericButton id="resetBtn" class="game-button" text="Reset" />
 		</div>
 		
 		<div>
