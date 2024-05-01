@@ -11,7 +11,7 @@ describe('VordleBoard Component tests', () => {
     wrapper = mount(WordleBoard, { props: { wordOfTheDay: WOTD } });
   });
 
-  describe(`GuessViews component tests`, async () => {
+  describe(`Gameboard view component tests`, async () => {
     it(`shows ${MAX_GUESSES_COUNT} GuessViews on the game board`,
       async () => {
         expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT);
