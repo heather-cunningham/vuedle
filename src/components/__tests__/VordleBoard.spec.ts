@@ -13,6 +13,14 @@ describe('VordleBoard Component tests', () => {
 
   describe(`Game board view component tests`, async () => {
 
+    it('should have a Submit button', ()=>{
+      expect(wrapper.find('#submitBtn').element).not.toBeNull();
+    });
+
+    it('should have a Reset button', ()=>{
+      expect(wrapper.find('#resetBtn').element).not.toBeNull();
+    });
+
     it(`shows ${MAX_GUESSES_COUNT} GuessViews on the game board`, () => {
       expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT);
     });
