@@ -74,6 +74,7 @@ main {
 }
 
 .gameboard {
+	margin: auto;
 	display: inherit;
 }
 
@@ -88,7 +89,7 @@ li {
 }
 
 .game-buttons {
-	margin: 6px 0 0 0;
+	margin: 6px auto 0 auto;
 	display: inherit;
 }
 
