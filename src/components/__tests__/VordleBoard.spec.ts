@@ -11,45 +11,35 @@ describe('VordleBoard Component tests', () => {
     wrapper = mount(WordleBoard, { props: { wordOfTheDay: WOTD } });
   });
 
-  describe('End of Game Messages tests', () => {
-    it('shows a victory message when the user correctly guesses the word of the day',
+  describe(`GuessViews component tests`, async () => {
+    it(`shows ${MAX_GUESSES_COUNT} GuessViews on the game board`,
+      async () => {
+        expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT);
+      });
+
+    it(`shows ${MAX_GUESSES_COUNT} GuessViews on the game board when the player wins the game`,
       async () => {
         await playerTypesGuess(WOTD);
         await playerPressesEnter();
-        expect(wrapper.text()).toContain(VICTORY_MESSAGE);
+        expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT);
       });
 
-    it(`shows a defeat message if the player guesses incorrectly ${MAX_GUESSES_COUNT} times`,
+    it(`shows ${MAX_GUESSES_COUNT} GuessViews on the game board when the player loses the game`,
       async () => {
-        for (let i = 0; i <= MAX_GUESSES_COUNT; i++) {
-          await playerTypesGuess('WRONG');
+        const GUESSES = [
+          'WRONG',
+          'GUESS',
+          'HELLO',
+          'WORLD',
+          'HAPPY',
+          'CODER'
+        ];
+
+        for (const GUESS of GUESSES) {
+          await playerTypesGuess(GUESS);
           await playerPressesEnter();
+          expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT);
         }
-        expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
-      });
-
-
-    describe.each(
-      Array.from(
-        { length: MAX_GUESSES_COUNT - 1 },
-        (_, numberOfGuesses) => ({ numberOfGuesses })
-      )
-    )(`a defeat message should not appear if the player guesses incorrectly less than ${MAX_GUESSES_COUNT} times`,
-      ({ numberOfGuesses }) => {
-        it(`does not show a defeat message on incorrect guess #${numberOfGuesses + 1}`,
-          async () => {
-            for (let i = 0; i <= numberOfGuesses; i++) {
-              await playerTypesGuess('WRONG');
-              await playerPressesEnter();
-            }
-            expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
-          });
-      });
-
-    it('does not show any end-of-game message if the user has not guessed yet',
-      async () => {
-        expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
-        expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
       });
   });
 
@@ -181,38 +171,6 @@ describe('VordleBoard Component tests', () => {
     });
   });
 
-  describe(`GuessViews component tests`, async () => {
-    it(`shows ${MAX_GUESSES_COUNT} GuessViews on the game board`,
-      async () => {
-        expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT);
-      });
-
-    it(`shows ${MAX_GUESSES_COUNT} GuessViews on the game board when the player wins the game`,
-      async () => {
-        await playerTypesGuess(WOTD);
-        await playerPressesEnter();
-        expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT);
-      });
-
-    it(`shows ${MAX_GUESSES_COUNT} GuessViews on the game board when the player loses the game`,
-      async () => {
-        const GUESSES = [
-          'WRONG',
-          'GUESS',
-          'HELLO',
-          'WORLD',
-          'HAPPY',
-          'CODER'
-        ];
-
-        for (const GUESS of GUESSES) {
-          await playerTypesGuess(GUESS);
-          await playerPressesEnter();
-          expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT);
-        }
-      });
-  });
-
   describe('Player Hints/Feedback tests', () => {
     it('it does not show hints until a guess is submitted', async () => {
       expect(wrapper.find('[data-letter-feedback]').exists(),
@@ -277,6 +235,48 @@ describe('VordleBoard Component tests', () => {
         expect(actualFeedback).toEqual(expectedFeedback);
       });
     });
+  });
+
+  describe('End of Game Messages tests', () => {
+    it('shows a victory message when the user correctly guesses the word of the day',
+      async () => {
+        await playerTypesGuess(WOTD);
+        await playerPressesEnter();
+        expect(wrapper.text()).toContain(VICTORY_MESSAGE);
+      });
+
+    it(`shows a defeat message if the player guesses incorrectly ${MAX_GUESSES_COUNT} times`,
+      async () => {
+        for (let i = 0; i <= MAX_GUESSES_COUNT; i++) {
+          await playerTypesGuess('WRONG');
+          await playerPressesEnter();
+        }
+        expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
+      });
+
+
+    describe.each(
+      Array.from(
+        { length: MAX_GUESSES_COUNT - 1 },
+        (_, numberOfGuesses) => ({ numberOfGuesses })
+      )
+    )(`a defeat message should not appear if the player guesses incorrectly less than ${MAX_GUESSES_COUNT} times`,
+      ({ numberOfGuesses }) => {
+        it(`does not show a defeat message on incorrect guess #${numberOfGuesses + 1}`,
+          async () => {
+            for (let i = 0; i <= numberOfGuesses; i++) {
+              await playerTypesGuess('WRONG');
+              await playerPressesEnter();
+            }
+            expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+          });
+      });
+
+    it('does not show any end-of-game message if the user has not guessed yet',
+      async () => {
+        expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+        expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+      });
   });
 
   //------------------------------ Helper Fcns------------------------------------------------
