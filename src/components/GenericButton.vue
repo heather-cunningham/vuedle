@@ -1,7 +1,6 @@
 <template>
-	<button :id="props.id" :class="props.buttonClass" v-text="props.text" @click="handleClick" />
-<!--		{{ props.text }}-->
-<!--	</button>-->
+	<button :id="props.id" :class="props.buttonClass" v-text="props.text" @click="handleClick" >
+	</button>
 </template>
 
 <script lang="ts" setup>
