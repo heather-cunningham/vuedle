@@ -18,8 +18,8 @@
 		</div>
 		
 		<div class="game-buttons">
-			<GenericButton id="submitBtn" label="Submit" />
-			<GenericButton id="resetBtn" label="Reset" />
+				<GenericButton id="submitBtn" class="game-button" label="Submit" />
+				<GenericButton id="resetBtn" class="game-button" label="Reset" />
 		</div>
 		
 		<div>
@@ -68,15 +68,16 @@ const countOfEmptyGuesses = computed(() => {
 main {
 	margin: 6%;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	font-family: Roboto, Tahoma, Verdana, sans-serif;
 }
 
 .gameboard {
-	margin: 0 3% 0 35%;
-	float: left;
+	/*margin: 0 3% 0 0;*/
+	/*float: left;*/
 	display: inherit;
-	flex-direction: column;
+	/*flex-direction: column;*/
 }
 
 ul {
@@ -90,10 +91,16 @@ li {
 }
 
 .game-buttons {
-	float: right;
-	clear: both;
+	margin: 6px 0 0 0;
+	/*float: right;
+	clear: both;*/
 	display: inherit;
-	flex-direction: column;
+	/*flex-direction: column;*/
+}
+
+.game-button {
+	margin: 0 3px 0 3px;
+	width: 120px;
 }
 
 </style>
